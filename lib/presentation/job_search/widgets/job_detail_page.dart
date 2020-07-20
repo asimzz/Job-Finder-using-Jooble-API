@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/style.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:job_finder/domain/job_model/job_model.dart';
@@ -69,12 +71,14 @@ class JobDetailsPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        jobModel.salary.value,
-                        style: GoogleFonts.viga(
-                          textStyle: TextStyle(
-                            color: kBlack,
-                            fontSize: 13,
+                      Expanded(
+                        child: Text(
+                          jobModel.salary.value,
+                          style: GoogleFonts.viga(
+                            textStyle: TextStyle(
+                              color: kBlack,
+                              fontSize: 13,
+                            ),
                           ),
                         ),
                       ),
@@ -91,12 +95,14 @@ class JobDetailsPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
-                        jobModel.type.value,
-                        style: GoogleFonts.viga(
-                          textStyle: TextStyle(
-                            color: kBlack,
-                            fontSize: 13,
+                      Expanded(
+                        child: Text(
+                          jobModel.type.value,
+                          style: GoogleFonts.viga(
+                            textStyle: TextStyle(
+                              color: kBlack,
+                              fontSize: 13,
+                            ),
                           ),
                         ),
                       ),
@@ -175,9 +181,59 @@ class JobDetailsPage extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 25.0),
+                  Row(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.infoCircle,
+                        color: Color(0xFFF87633),
+                      ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        'A Snippet: ',
+                        style: GoogleFonts.viga(
+                          textStyle: TextStyle(
+                            color: Color(0XFFF87633),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   Html(
                     data: jobModel.snippet,
-                    style: {},
+                    style: {
+                      'html': Style(
+                        fontFamily: GoogleFonts.viga().fontFamily,
+                        fontSize: FontSize(15),
+                      )
+                    },
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  RichText(
+                    textAlign: TextAlign.start,
+                    text: TextSpan(
+                      text: 'For more Info ',
+                      style: GoogleFonts.viga(
+                          textStyle: TextStyle(color: Colors.black)),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: 'Click Here',
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                print(
+                                    'it should take us to this link ${jobModel.source}');
+                              },
+                            style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFFF87633))),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -212,7 +268,8 @@ class JobDetailsPage extends StatelessWidget {
                   height: 50.0,
                   child: RaisedButton(
                     onPressed: () async {
-                      print(jobModel.link);
+                      print(
+                          'It should take you to this linke ${jobModel.link}');
                     },
                     color: kBlack,
                     shape: RoundedRectangleBorder(
